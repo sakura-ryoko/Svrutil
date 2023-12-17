@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.w3c.dom.Text;
 
 import com.lx862.svrutil.config.MainConfig;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 
 /*
  * This Mixin is used for sending fake time packets to client (/clienttime), and overriding the whitelist message.

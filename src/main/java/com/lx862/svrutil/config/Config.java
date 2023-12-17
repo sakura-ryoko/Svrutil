@@ -1,15 +1,16 @@
 package com.lx862.svrutil.config;
 
-import com.lx862.svrutil.transition.TransitionConfig;
-import net.fabricmc.loader.api.FabricLoader;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+//import com.lx862.svrutil.transition.TransitionConfig;
+import net.fabricmc.loader.api.FabricLoader;
+
 public class Config {
-    private static final Path configFolder = Paths.get(FabricLoader.getInstance().getConfigDir().toString(), "svrutil");
+    private static final Path configFolder = Paths.get(FabricLoader.getInstance().getConfigDir().toString(),
+            "svrutil-lite");
 
     public static Path getConfigPath(String filename) {
         try {
@@ -22,15 +23,16 @@ public class Config {
 
     public static List<String> loadAll() {
         List<String> error = new ArrayList<>();
-        if(!MainConfig.load()) {
+        if (!MainConfig.load()) {
             error.add("Main Config");
         }
 
-        if(!TransitionConfig.load()) {
-            error.add("Transition Config");
-        }
-
-        if(!CommandConfig.load()) {
+        /*
+         * if(!TransitionConfig.load()) {
+         * error.add("Transition Config");
+         * }
+         */
+        if (!CommandConfig.load()) {
             error.add("Command Config");
         }
 

@@ -7,21 +7,24 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.w3c.dom.Text;
-
-import com.google.gson.*;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.SvrUtil;
 import com.lx862.svrutil.data.JoinMessage;
 
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class MainConfig {
     private static final Path CONFIG_PATH = Config.getConfigPath("config.json");
     private static Text silentKickMessage = Mappings.literalText("Internal Exception: java.lang.StackOverflowError");
-    private static boolean fixedItemFrame = false;
-    private static int fallingBlockDelay = 2; // Vanilla takes 2 tick to fall
+    // private static boolean fixedItemFrame = false;
+    // private static int fallingBlockDelay = 2; // Vanilla takes 2 tick to fall
     public static Text whitelistedMessage = null;
     public static final List<JoinMessage> joinMessages = new ArrayList<>();
 

@@ -15,7 +15,6 @@ import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.command.ServerCommandSource;
 
 public class Commands {
@@ -48,8 +47,8 @@ public class Commands {
         silentTp.register(dispatcher);
         silentKick.register(dispatcher);
         // theend.register(dispatcher);
-        if (FabricLoader.getInstance().isDevelopmentEnvironment())
-            transition.register(dispatcher);
+        // if (FabricLoader.getInstance().isDevelopmentEnvironment())
+        // transition.register(dispatcher);
         // unspectate.register(dispatcher);
         where.register(dispatcher);
     }

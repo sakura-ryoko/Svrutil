@@ -2,20 +2,20 @@ package com.lx862.svrutil;
 
 import java.util.function.Consumer;
 
-import org.w3c.dom.Text;
-
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
+//import net.minecraft.server.network.ServerPlayerEntity;
+//import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.MutableText;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.text.Text;
+//import net.minecraft.util.Identifier;
+//import net.minecraft.util.math.Vec3d;
+//import net.minecraft.world.World;
+//import net.minecraft.network.packet.s2c.play.*;
 
 public class Mappings {
     public static MutableText literalText(String content) {
@@ -31,30 +31,34 @@ public class Mappings {
                 .register((dispatcher, dedicated, third) -> callback.accept(dispatcher));
     }
 
-    public static void sendPlaySoundIdS2CPacket(World world, ServerPlayerEntity player, Identifier sound,
-            SoundCategory soundCategory, Vec3d pos, float volume, float pitch) {
-        /*
-         * #if MC_VERSION > "11902"
-         * net.minecraft.registry.entry.RegistryEntry<net.minecraft.sound.SoundEvent>
-         * soundEvent =
-         * net.minecraft.registry.entry.RegistryEntry.of(net.minecraft.sound.SoundEvent.
-         * of(sound));
-         * player.networkHandler.sendPacket(new
-         * net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket(soundEvent,
-         * soundCategory, pos.x, pos.y, pos.z, volume, 1,
-         * world.getRandom().nextLong()));
-         * #else
-         */
-        player.networkHandler.sendPacket(new net.minecraft.network.packet.s2c.play.PlaySoundIdS2CPacket(sound,
-                soundCategory, pos, volume, 1, world.getRandom().nextLong()));
-        // #endif
-    }
+    /*
+     * public static void sendPlaySoundIdS2CPacket(World world, ServerPlayerEntity
+     * player, Identifier sound,
+     * SoundCategory soundCategory, Vec3d pos, float volume, float pitch) {
+     *
+     * #if MC_VERSION > "11902"
+     * net.minecraft.registry.entry.RegistryEntry<net.minecraft.sound.SoundEvent>
+     * soundEvent =
+     * net.minecraft.registry.entry.RegistryEntry.of(net.minecraft.sound.SoundEvent.
+     * of(sound));
+     * player.networkHandler.sendPacket(new
+     * net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket(soundEvent,
+     * soundCategory, pos.x, pos.y, pos.z, volume, 1,
+     * world.getRandom().nextLong()));
+     * #else
+     *
+     * player.networkHandler.sendPacket(new PlaySoundIdS2CPacket(sound,
+     * soundCategory, pos, volume, 1, world.getRandom().nextLong()));
+     * // #endif
+     * }
+     */
 
-    public static void sendFeedback(CommandContext<ServerCommandSource> context, MutableText text, boolean broadcastToOps) {
-//        #if MC_VERSION >= "12000"
-            context.getSource().sendFeedback(() -> text, broadcastToOps);
-  //      #else
-//            context.getSource().sendFeedback(text, broadcastToOps);
-        #endif
+    public static void sendFeedback(CommandContext<ServerCommandSource> context, MutableText text,
+            boolean broadcastToOps) {
+        // #if MC_VERSION >= "12000"
+        context.getSource().sendFeedback(() -> text, broadcastToOps);
+        // #else
+        // context.getSource().sendFeedback(text, broadcastToOps);
+        // #endif
     }
 }
