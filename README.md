@@ -1,6 +1,5 @@
 # SvrUtil-Lite (Forked by Sakura-Ryoko)
-Bunch of useful, and occasionally weird specific tweaks and commands for Fabric-compatible server.
-- Fork strips out a bunch of useless features.
+Fork strips out a bunch of useless junk features from SvrUtil.
 
 ## Config file
 This mod will work out of the box with all the commands ready to be used.  
