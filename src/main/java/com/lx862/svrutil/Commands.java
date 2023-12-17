@@ -6,6 +6,7 @@ import com.lx862.svrutil.commands.heal;
 import com.lx862.svrutil.commands.msg;
 import com.lx862.svrutil.commands.opLevel;
 import com.lx862.svrutil.commands.r;
+import com.lx862.svrutil.commands.rootCommand;
 import com.lx862.svrutil.commands.selfkill;
 import com.lx862.svrutil.commands.silentKick;
 import com.lx862.svrutil.commands.silentTp;
@@ -33,7 +34,7 @@ public class Commands {
         // gms.register(dispatcher);
         // gmsp.register(dispatcher);
         heal.register(dispatcher);
-        // rootCommand.register(dispatcher);
+        rootCommand.register(dispatcher);
         // lightblock.register(dispatcher);
         msg.register(dispatcher);
         opLevel.register(dispatcher);

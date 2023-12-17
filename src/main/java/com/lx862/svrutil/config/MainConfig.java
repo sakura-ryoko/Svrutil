@@ -30,13 +30,13 @@ public class MainConfig {
 
     public static boolean load() {
         if (!Files.exists(CONFIG_PATH)) {
-            SvrUtil.LOGGER.warn("[{}] Config file not found, generating one...", ModInfo.MOD_NAME);
+            SvrUtil.LOGGER.warn("[{}] Config file not found, generating one...", ModInfo.MOD_ID);
             generate();
             load();
             return true;
         }
 
-        SvrUtil.LOGGER.info("[{}] Reading config...", ModInfo.MOD_NAME);
+        SvrUtil.LOGGER.info("[{}] Reading config...", ModInfo.MOD_ID);
         joinMessages.clear();
         try {
             final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH)))
@@ -93,14 +93,14 @@ public class MainConfig {
     }
 
     public static void generate() {
-        SvrUtil.LOGGER.info("[{}] Generating config...", ModInfo.MOD_NAME);
+        SvrUtil.LOGGER.info("[{}] Generating config...", ModInfo.MOD_ID);
         final JsonObject jsonConfig = new JsonObject();
         final JsonArray welcomeConfig = new JsonArray();
         final JsonObject welcomeConfig1 = JoinMessage.toJson(new JoinMessage(
                 Mappings.literalText("Welcome title").formatted(Formatting.GREEN),
                 Mappings.literalText("Welcome subtitle").formatted(Formatting.AQUA),
                 Mappings.literalText(
-                        "Please edit \"config/svrutil/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil.")
+                        "Please edit \"config/svrutil/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil-Lite.")
                         .formatted(Formatting.GREEN),
                 20, Arrays.asList(1, 2, 3, 4)));
         welcomeConfig.add(welcomeConfig1);

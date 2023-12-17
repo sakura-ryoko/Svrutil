@@ -10,10 +10,11 @@ import com.lx862.svrutil.config.Config;
 
 //import com.lx862.svrutil.transition.TransitionManager;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
 public class SvrUtil implements ModInitializer {
-    public static final Logger LOGGER = LogManager.getLogger(ModInfo.MOD_NAME);
+    public static final Logger LOGGER = LogManager.getLogger(ModInfo.MOD_ID);
     public static final String[] motds = { "Have a great day!", "OwO What's this?", "made ya look", "Drink water!",
             "i use arch btw", "The mystery is of Wet and Dry. And where does the solution lie?", "Backup Regularly >.<",
             "I'll be back in a jiffy!", "Treasure everything before it's no longer there.",
@@ -24,7 +25,8 @@ public class SvrUtil implements ModInitializer {
     @Override
     public void onInitialize() {
         String motd = motds[(int) (System.currentTimeMillis() % motds.length)];
-        LOGGER.info("[{}] {}", ModInfo.MOD_NAME, motd);
+        LOGGER.info("[{}] {}-{}", ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.getVersion());
+        LOGGER.info("[{}] {}", ModInfo.MOD_ID, motd);
 
         Config.loadAll();
 
@@ -38,7 +40,7 @@ public class SvrUtil implements ModInitializer {
 
         /* Register Fabric API Events */
         ServerPlayConnectionEvents.JOIN.register(Events::onJoin);
-        // ServerTickEvents.START_SERVER_TICK.register(Events::onServerTick);
-        // ServerTickEvents.END_SERVER_TICK.register(Events::onTickEnd);
+        ServerTickEvents.START_SERVER_TICK.register(Events::onServerTick);
+        ServerTickEvents.END_SERVER_TICK.register(Events::onTickEnd);
     }
 }

@@ -7,7 +7,9 @@ import java.util.HashMap;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.google.gson.*;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.SvrUtil;
 import com.lx862.svrutil.data.CommandEntry;
@@ -18,13 +20,13 @@ public class CommandConfig {
 
     public static boolean load() {
         if (!Files.exists(CONFIG_PATH)) {
-            SvrUtil.LOGGER.warn("[{}] Command config file not found, generating one...", ModInfo.MOD_NAME);
+            SvrUtil.LOGGER.warn("[{}] Command config file not found, generating one...", ModInfo.MOD_ID);
             generate();
             load();
             return true;
         }
 
-        SvrUtil.LOGGER.info("[{}] Reading Command config...", ModInfo.MOD_NAME);
+        SvrUtil.LOGGER.info("[{}] Reading Command config...", ModInfo.MOD_ID);
         commandEntries.clear();
         try {
             final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH)))
@@ -49,7 +51,7 @@ public class CommandConfig {
     }
 
     public static void generate() {
-        SvrUtil.LOGGER.info("[{}] Generating command config...", ModInfo.MOD_NAME);
+        SvrUtil.LOGGER.info("[{}] Generating command config...", ModInfo.MOD_ID);
         final JsonObject jsonConfig = new JsonObject();
         jsonConfig.addProperty("_COMMENT_1",
                 "This config is used to define what commands are enabled/disabled, it's required permission level to use those commands and such");
