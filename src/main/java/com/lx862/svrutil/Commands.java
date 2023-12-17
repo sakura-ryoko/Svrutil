@@ -21,36 +21,16 @@ import net.minecraft.server.command.ServerCommandSource;
 public class Commands {
 
     public static void register(CommandDispatcher<net.minecraft.server.command.ServerCommandSource> dispatcher) {
-        // afk.register(dispatcher);
-        // barrierblock.register(dispatcher);
-        // clienttime.register(dispatcher);
-        // clientweather.register(dispatcher);
-        // cmdblock.register(dispatcher);
         fancyKick.register(dispatcher);
         feed.register(dispatcher);
-        // fly.register(dispatcher);
-        // gma.register(dispatcher);
-        // gmc.register(dispatcher);
-        // gms.register(dispatcher);
-        // gmsp.register(dispatcher);
         heal.register(dispatcher);
         rootCommand.register(dispatcher);
-        // lightblock.register(dispatcher);
         msg.register(dispatcher);
         opLevel.register(dispatcher);
-        // nether.register(dispatcher);
-        // overworld.register(dispatcher);
         r.register(dispatcher);
         selfkill.register(dispatcher);
-        // spawn.register(dispatcher);
-        // spd.register(dispatcher);
-        // spectate.register(dispatcher);
         silentTp.register(dispatcher);
         silentKick.register(dispatcher);
-        // theend.register(dispatcher);
-        // if (FabricLoader.getInstance().isDevelopmentEnvironment())
-        // transition.register(dispatcher);
-        // unspectate.register(dispatcher);
         where.register(dispatcher);
     }
 

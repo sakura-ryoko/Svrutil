@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-//import com.lx862.svrutil.transition.TransitionConfig;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class Config {
@@ -27,11 +26,6 @@ public class Config {
             error.add("Main Config");
         }
 
-        /*
-         * if(!TransitionConfig.load()) {
-         * error.add("Transition Config");
-         * }
-         */
         if (!CommandConfig.load()) {
             error.add("Command Config");
         }

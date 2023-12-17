@@ -23,8 +23,6 @@ import net.minecraft.util.Formatting;
 public class MainConfig {
     private static final Path CONFIG_PATH = Config.getConfigPath("config.json");
     private static Text silentKickMessage = Mappings.literalText("Internal Exception: java.lang.StackOverflowError");
-    // private static boolean fixedItemFrame = false;
-    // private static int fallingBlockDelay = 2; // Vanilla takes 2 tick to fall
     public static Text whitelistedMessage = null;
     public static final List<JoinMessage> joinMessages = new ArrayList<>();
 
@@ -74,15 +72,6 @@ public class MainConfig {
                 } catch (Exception ignored) {
                 }
             }
-            /*
-             * if(jsonConfig.has("fixedItemFrame")) {
-             * fixedItemFrame = jsonConfig.get("fixedItemFrame").getAsBoolean();
-             * }
-             * 
-             * if(jsonConfig.has("fallingBlockDelay")) {
-             * fallingBlockDelay = jsonConfig.get("fallingBlockDelay").getAsInt();
-             * }
-             */
         } catch (Exception e) {
             e.printStackTrace();
             generate();
@@ -104,8 +93,6 @@ public class MainConfig {
                         .formatted(Formatting.GREEN),
                 20, Arrays.asList(1, 2, 3, 4)));
         welcomeConfig.add(welcomeConfig1);
-        // jsonConfig.addProperty("fallingBlockDelay", fallingBlockDelay);
-        // jsonConfig.addProperty("fixedItemFrame", fixedItemFrame);
         jsonConfig.addProperty("whitelistedMessage", "You are not whitelisted on the server!");
         jsonConfig.addProperty("silentKickMessage", "Internal Exception: java.lang.StackOverflowError");
         jsonConfig.add("joinMessages", welcomeConfig);
@@ -118,14 +105,6 @@ public class MainConfig {
         }
     }
 
-    /*
-     * public static int getFallingBlockDelay() {
-     * return fallingBlockDelay;
-     * }
-     * public static boolean getFixedItemFrame() {
-     * return fixedItemFrame;
-     * }
-     */
     public static Text getSilentKickMessage() {
         return silentKickMessage;
     }

@@ -63,19 +63,6 @@ public class msg {
                                                                                         SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
                                                                                         SoundCategory.MASTER, 1,
                                                                                         1);
-
-                                                                        /*
-                                                                         * if(afk.afkList.containsKey(target.getUuid())
-                                                                         * &&
-                                                                         * context.getSource().isExecutedByPlayer()) {
-                                                                         * context.getSource().getPlayer().
-                                                                         * sendMessageToClient(Mappings.literalText("").
-                                                                         * append(target.getDisplayName()).
-                                                                         * append(" are AFK and may not be available at the moment."
-                                                                         * ).formatted(
-                                                                         * Formatting.YELLOW), true);
-                                                                         * }
-                                                                         */
                                                                         Commands.finishedExecution(context,
                                                                                         defaultEntry);
                                                                         return 1;

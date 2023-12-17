@@ -28,7 +28,6 @@ import net.minecraft.world.World;
  */
 @Mixin(value = PlayerManager.class)
 public class PlayerManagerMixin {
-
     @Shadow
     @Final
     private List<ServerPlayerEntity> players;

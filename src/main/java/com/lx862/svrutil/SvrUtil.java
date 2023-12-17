@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.lx862.svrutil.config.Config;
 
-//import com.lx862.svrutil.transition.TransitionManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -30,12 +29,6 @@ public class SvrUtil implements ModInitializer {
 
         Config.loadAll();
 
-        // WIP Feature
-        /*
-         * if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-         * TransitionManager.initialize();
-         * }
-         */
         Mappings.registerCommand(Commands::register);
 
         /* Register Fabric API Events */
