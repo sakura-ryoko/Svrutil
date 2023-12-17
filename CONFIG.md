@@ -1,12 +1,10 @@
 # Config
 All config file are stored in the JSON format, and a default config file will be automatically generated if missing.
 ## Main Config
-The config file are located in `Your Fabric Instance/config/svrutil/config.json`.
+The config file are located in `Your Fabric Instance/config/svrutil-lite/config.json`.
 
 | Key                                       | Description                                                                                                                                | Default Value                                      |
 |-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
-| fallingBlockDelay                         | This sets the tick of when falling block like Sand and Gravel should start falling after placing.<br>-1 to disable falling block entirely. | 2 (Vanilla)                                        |
-| fixedItemFrame                            | Whether all item frames in the world should be fixed. (Does not get detached or affected by explosions)                                    | false                                              |
 | silentKickMessage                         | The message sent to the player being kicked with the /silentkick command. (Minecraft RAW Text Format)                                      | "Internal Exception: java.lang.StackOverflowError" |
 | whitelistedMessage                        | The message sent to the player being kicked due to being whitelisted. (Minecraft RAW Text Format)                                          | null (Use vanilla default)                         |
 | joinMessages                              | An array of JSON Object representing a welcome message, see below.                                                                         | [...]                                              |
