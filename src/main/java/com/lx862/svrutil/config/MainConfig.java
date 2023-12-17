@@ -1,16 +1,21 @@
 package com.lx862.svrutil.config;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.w3c.dom.Text;
+
 import com.google.gson.*;
 import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.SvrUtil;
 import com.lx862.svrutil.data.JoinMessage;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
+import net.minecraft.util.Formatting;
 
 public class MainConfig {
     private static final Path CONFIG_PATH = Config.getConfigPath("config.json");
@@ -21,7 +26,7 @@ public class MainConfig {
     public static final List<JoinMessage> joinMessages = new ArrayList<>();
 
     public static boolean load() {
-        if(!Files.exists(CONFIG_PATH)) {
+        if (!Files.exists(CONFIG_PATH)) {
             SvrUtil.LOGGER.warn("[{}] Config file not found, generating one...", ModInfo.MOD_NAME);
             generate();
             load();
@@ -31,16 +36,17 @@ public class MainConfig {
         SvrUtil.LOGGER.info("[{}] Reading config...", ModInfo.MOD_NAME);
         joinMessages.clear();
         try {
-            final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH))).getAsJsonObject();
+            final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH)))
+                    .getAsJsonObject();
 
-            if(jsonConfig.has("joinMessages")) {
+            if (jsonConfig.has("joinMessages")) {
                 jsonConfig.getAsJsonArray("joinMessages").forEach(e -> {
                     JsonObject jsonObject = e.getAsJsonObject();
                     joinMessages.add(JoinMessage.fromJson(jsonObject));
                 });
             }
 
-            if(jsonConfig.has("whitelistedMessage")) {
+            if (jsonConfig.has("whitelistedMessage")) {
                 JsonElement element = jsonConfig.get("whitelistedMessage");
                 try {
                     whitelistedMessage = Text.Serializer.fromJson(element.getAsString());
@@ -53,7 +59,7 @@ public class MainConfig {
                 }
             }
 
-            if(jsonConfig.has("silentKickMessage")) {
+            if (jsonConfig.has("silentKickMessage")) {
                 JsonElement element = jsonConfig.get("silentKickMessage");
                 try {
                     silentKickMessage = Text.Serializer.fromJson(element.getAsString());
@@ -65,14 +71,15 @@ public class MainConfig {
                 } catch (Exception ignored) {
                 }
             }
-
-            if(jsonConfig.has("fixedItemFrame")) {
-                fixedItemFrame = jsonConfig.get("fixedItemFrame").getAsBoolean();
-            }
-
-            if(jsonConfig.has("fallingBlockDelay")) {
-                fallingBlockDelay = jsonConfig.get("fallingBlockDelay").getAsInt();
-            }
+            /*
+             * if(jsonConfig.has("fixedItemFrame")) {
+             * fixedItemFrame = jsonConfig.get("fixedItemFrame").getAsBoolean();
+             * }
+             * 
+             * if(jsonConfig.has("fallingBlockDelay")) {
+             * fallingBlockDelay = jsonConfig.get("fallingBlockDelay").getAsInt();
+             * }
+             */
         } catch (Exception e) {
             e.printStackTrace();
             generate();
@@ -86,28 +93,36 @@ public class MainConfig {
         SvrUtil.LOGGER.info("[{}] Generating config...", ModInfo.MOD_NAME);
         final JsonObject jsonConfig = new JsonObject();
         final JsonArray welcomeConfig = new JsonArray();
-        final JsonObject welcomeConfig1 = JoinMessage.toJson(new JoinMessage(Mappings.literalText("Welcome title").formatted(Formatting.GREEN), Mappings.literalText("Welcome subtitle").formatted(Formatting.AQUA), Mappings.literalText("Please edit \"config/svrutil/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil.").formatted(Formatting.GREEN), 20, Arrays.asList(1, 2, 3, 4)));
+        final JsonObject welcomeConfig1 = JoinMessage.toJson(new JoinMessage(
+                Mappings.literalText("Welcome title").formatted(Formatting.GREEN),
+                Mappings.literalText("Welcome subtitle").formatted(Formatting.AQUA),
+                Mappings.literalText(
+                        "Please edit \"config/svrutil/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil.")
+                        .formatted(Formatting.GREEN),
+                20, Arrays.asList(1, 2, 3, 4)));
         welcomeConfig.add(welcomeConfig1);
-        jsonConfig.addProperty("fallingBlockDelay", fallingBlockDelay);
-        jsonConfig.addProperty("fixedItemFrame", fixedItemFrame);
+        // jsonConfig.addProperty("fallingBlockDelay", fallingBlockDelay);
+        // jsonConfig.addProperty("fixedItemFrame", fixedItemFrame);
         jsonConfig.addProperty("whitelistedMessage", "You are not whitelisted on the server!");
         jsonConfig.addProperty("silentKickMessage", "Internal Exception: java.lang.StackOverflowError");
         jsonConfig.add("joinMessages", welcomeConfig);
 
         try {
-            Files.write(CONFIG_PATH, Collections.singleton(new GsonBuilder().setPrettyPrinting().create().toJson(jsonConfig)));
+            Files.write(CONFIG_PATH,
+                    Collections.singleton(new GsonBuilder().setPrettyPrinting().create().toJson(jsonConfig)));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static int getFallingBlockDelay() {
-        return fallingBlockDelay;
-    }
-    public static boolean getFixedItemFrame() {
-        return fixedItemFrame;
-    }
-
+    /*
+     * public static int getFallingBlockDelay() {
+     * return fallingBlockDelay;
+     * }
+     * public static boolean getFixedItemFrame() {
+     * return fixedItemFrame;
+     * }
+     */
     public static Text getSilentKickMessage() {
         return silentKickMessage;
     }

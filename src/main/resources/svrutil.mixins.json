@@ -4,8 +4,6 @@
   "package": "com.lx862.svrutil.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "FallingBlockMixin",
-    "ItemFrameMixin",
     "PlayerManagerMixin"
   ],
   "client": [

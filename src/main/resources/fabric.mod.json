@@ -1,17 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "svrutil",
+  "id": "svrutil-lite",
   "version": "${version}",
 
   "name": "SvrUtil",
   "description": "Add utilities command for server management, and a couple vanilla tweaks.",
   "authors": [
-    "LX86"
+    "LX86",
+    "Forked by Sakura-Ryoko"
   ],
-  "contact": {
-    "homepage": "https://github.com/Kenny-Hui/Svrutil",
-    "sources": "https://github.com/Kenny-Hui/Svrutil"
-  },
+  "contact": {},
 
   "license": "MIT",
   "icon": "assets/svrutil/icon.png",
