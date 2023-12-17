@@ -100,7 +100,7 @@ public class MainConfig {
                 Mappings.literalText("Welcome title").formatted(Formatting.GREEN),
                 Mappings.literalText("Welcome subtitle").formatted(Formatting.AQUA),
                 Mappings.literalText(
-                        "Please edit \"config/svrutil/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil-Lite.")
+                        "Please edit \"config/svrutil-lite/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil-Lite.")
                         .formatted(Formatting.GREEN),
                 20, Arrays.asList(1, 2, 3, 4)));
         welcomeConfig.add(welcomeConfig1);
