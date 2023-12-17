@@ -3,7 +3,7 @@
   "id": "svrutil-lite",
   "version": "${version}",
 
-  "name": "SvrUtil",
+  "name": "SvrUtil-Lite",
   "description": "Add utilities command for server management, and a couple vanilla tweaks.",
   "authors": [
     "LX86",
