@@ -24,11 +24,7 @@ Note: These are just the default command configuration, you may optionally disab
 | /where <Target Player>                                                                      | Tells the XYZ Coordinates of the player                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Op Level 2             |
 
 ## Setup
-You may run the `downloadOptimizedMod` gradle task if you are not using a NASA computer.
-
-## Bugs/Suggestion
-This is originated from another server-specific mod, as such things will be a bit rough around the edges and are not as polished.  
-If you have any bugs or suggestions (Even just QOL one), you may open an GitHub issue [here](https://github.com/Kenny-Hui/SvrUtil/issues). Please keep things civil :)
+Run ./gradlew build
 
 ## License
 This project is licensed under the MIT License.
