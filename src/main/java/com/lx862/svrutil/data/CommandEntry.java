@@ -20,7 +20,7 @@ public class CommandEntry {
             List<String> chainedServerCommand, List<String> chainedPlayerCommand) {
         this.commandName = commandName;
         this.permLevel = permLevel;
-         if (!permApiNode || permApiNode == "")
+        if (permApiNode == null || permApiNode == "")
             this.permApiNode = MOD_ID + ".command." + commandName;
         else
             this.permApiNode = permApiNode;
