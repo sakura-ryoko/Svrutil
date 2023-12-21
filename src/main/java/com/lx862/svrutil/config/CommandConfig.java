@@ -63,7 +63,7 @@ public class CommandConfig {
                 "Otherwise, remove the underscore at the front of '_overrides' below and you may override the default command configuration.");
 
         final JsonObject commandConfigs = new JsonObject();
-        final JsonObject sampleConfig1 = new CommandEntry("feed_remapped_command", 2, MOD_ID + ".commands.feed", true)
+        final JsonObject sampleConfig1 = new CommandEntry("feed", 2, MOD_ID + ".commands.feed", true)
                 .toJson();
         commandConfigs.add("feed", sampleConfig1);
         jsonConfig.add("_overrides", commandConfigs);
