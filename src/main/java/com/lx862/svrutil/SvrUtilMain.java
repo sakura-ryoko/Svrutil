@@ -5,14 +5,13 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.lx862.svrutil.config.Config;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
-public class SvrUtil implements ModInitializer {
+public class SvrUtilMain implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger(ModInfo.MOD_ID);
     public static final String[] motds = { "Have a great day!", "OwO What's this?", "made ya look", "Drink water!",
             "i use arch btw", "The mystery is of Wet and Dry. And where does the solution lie?", "Backup Regularly >.<",

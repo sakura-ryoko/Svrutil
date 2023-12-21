@@ -29,6 +29,7 @@ Inside of this file, there should be one property called `overrides`, inside it 
 | commandName          | A string representing the command name that should be registered to Minecraft, you may use this to avoid command name conflict by changing this and remap it to another name of your liking. |
 | enabled              | If false, this command would not be registered in Minecraft at all, essentially disabling it.                                                                                                |
 | permLevel            | A number (integer) representing the minimum OP Level required to execute this command                                                                                                        |
+| permApiNode          | A String representing the Luck Permissions Node required to execute this command                                                                                                             |
 | chainedServerCommand | An array of String representing what command should be executed by the server (console) after the command has finished executing.                                                            |
 | chainedPlayerCommand | An array of String representing what command should be executed by the player after the command has finished executing.                                                                      |
 
@@ -36,24 +37,14 @@ Inside of this file, there should be one property called `overrides`, inside it 
 ```
 {
   "overrides": {
-    "fly": {
-      "commandName": "togglefly",
-      "chainedPlayerCommand": ["say I have executed the /fly command"],
-      "chainedServerCommand": ["tellraw @a \"{playerName} has executed the /fly command\""]
-    },
     "gmsp": {
       "enabled": false
     },
     "spawn": {
+      "permLevel": 2,
+      "permApiNode": "svrutil-lite.commands.spawn",
       "chainedServerCommand": ["/scoreboard players add {playerName} spawn_cmd_count 1"]
     }
   }
 }
 ```
-
-In the above example, assuming the player running the command is called Player234:
-- The /fly command is remapped to /togglefly in-game
-- After the player ran the /togglefly command, the Player will run the command `/say I have executed the /fly command`
-- After the player ran the /togglefly command, the Server will run the command `/tellraw @a "Player234 has executed the /fly command"`
-- The /gmsp command has been disabled
-- After the player ran the /spawn command, the Server will run the command `/scoreboard players add Player234 spawn_cmd_count 1`, increasing the player's score in scoreboard objective `spawn_cmd_count`.

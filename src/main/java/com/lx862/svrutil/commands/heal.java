@@ -1,11 +1,16 @@
 package com.lx862.svrutil.commands;
 
+import static com.lx862.svrutil.ModInfo.*;
+
+import me.lucko.fabric.api.permissions.v0.Permissions;
+
 import com.lx862.svrutil.Commands;
 import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -13,19 +18,18 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Formatting;
 
 public class heal {
-    private static final CommandEntry defaultEntry = new CommandEntry("heal", 2, true);
+    private static final CommandEntry defaultEntry = new CommandEntry("heal", 2, MOD_ID + ".command.heal", true);
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         final CommandEntry entry = CommandConfig.getCommandEntry(defaultEntry);
-        if(!entry.enabled) return;
+        if (!entry.enabled)
+            return;
 
         dispatcher.register(CommandManager.literal(entry.commandName)
-                .requires(ctx -> ctx.hasPermissionLevel(entry.permLevel))
+                .requires(Permissions.require(entry.permApiNode, entry.permLevel))
                 .executes(context -> execute(context, context.getSource().getPlayerOrThrow()))
                 .then(CommandManager.argument("target", EntityArgumentType.player())
-                    .executes(context -> execute(context, EntityArgumentType.getPlayer(context, "target")))
-                )
-        );
+                        .executes(context -> execute(context, EntityArgumentType.getPlayer(context, "target")))));
     }
 
     public static int execute(CommandContext<ServerCommandSource> context, ServerPlayerEntity target) {

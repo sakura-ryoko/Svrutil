@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.lx862.svrutil.SvrUtil;
+import com.lx862.svrutil.SvrUtilMain;
 import com.lx862.svrutil.config.MainConfig;
 import com.mojang.authlib.GameProfile;
 
@@ -38,7 +38,7 @@ public class PlayerManagerMixin {
         if (packet instanceof WorldTimeUpdateS2CPacket) {
             for (ServerPlayerEntity serverPlayerEntity : players) {
                 if (serverPlayerEntity.getWorld().getRegistryKey() == dimension
-                        && !SvrUtil.fakeTimeList.containsKey(serverPlayerEntity.getUuid())) {
+                        && !SvrUtilMain.fakeTimeList.containsKey(serverPlayerEntity.getUuid())) {
                     serverPlayerEntity.networkHandler.sendPacket(packet);
                 }
             }

@@ -1,5 +1,7 @@
 package com.lx862.svrutil.config;
 
+import static com.lx862.svrutil.ModInfo.*;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -11,7 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.lx862.svrutil.ModInfo;
-import com.lx862.svrutil.SvrUtil;
+import com.lx862.svrutil.SvrUtilMain;
 import com.lx862.svrutil.data.CommandEntry;
 
 public class CommandConfig {
@@ -20,13 +22,13 @@ public class CommandConfig {
 
     public static boolean load() {
         if (!Files.exists(CONFIG_PATH)) {
-            SvrUtil.LOGGER.warn("[{}] Command config file not found, generating one...", ModInfo.MOD_ID);
+            SvrUtilMain.LOGGER.warn("[{}] Command config file not found, generating one...", ModInfo.MOD_ID);
             generate();
             load();
             return true;
         }
 
-        SvrUtil.LOGGER.info("[{}] Reading Command config...", ModInfo.MOD_ID);
+        SvrUtilMain.LOGGER.info("[{}] Reading Command config...", ModInfo.MOD_ID);
         commandEntries.clear();
         try {
             final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH)))
@@ -51,7 +53,7 @@ public class CommandConfig {
     }
 
     public static void generate() {
-        SvrUtil.LOGGER.info("[{}] Generating command config...", ModInfo.MOD_ID);
+        SvrUtilMain.LOGGER.info("[{}] Generating command config...", ModInfo.MOD_ID);
         final JsonObject jsonConfig = new JsonObject();
         jsonConfig.addProperty("_COMMENT_1",
                 "This config is used to define what commands are enabled/disabled, it's required permission level to use those commands and such");
@@ -61,7 +63,8 @@ public class CommandConfig {
                 "Otherwise, remove the underscore at the front of '_overrides' below and you may override the default command configuration.");
 
         final JsonObject commandConfigs = new JsonObject();
-        final JsonObject sampleConfig1 = new CommandEntry("feed_remapped_command", 2, true).toJson();
+        final JsonObject sampleConfig1 = new CommandEntry("feed_remapped_command", 2, MOD_ID + ".commands.feed", true)
+                .toJson();
         commandConfigs.add("feed", sampleConfig1);
         jsonConfig.add("_overrides", commandConfigs);
 

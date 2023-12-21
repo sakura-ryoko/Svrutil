@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.lx862.svrutil.SvrUtil"
+      "com.lx862.svrutil.SvrUtilMain"
     ]
   },
   "mixins": [

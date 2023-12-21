@@ -17,10 +17,10 @@ public class Events {
     public static void onTickEnd(MinecraftServer server) {
         if (server.getTicks() % 20 == 0) {
             server.getPlayerManager().getPlayerList().forEach(player -> {
-                if (SvrUtil.fakeTimeList.containsKey(player.getUuid())) {
+                if (SvrUtilMain.fakeTimeList.containsKey(player.getUuid())) {
                     WorldTimeUpdateS2CPacket packet = new WorldTimeUpdateS2CPacket(
-                            SvrUtil.fakeTimeList.get(player.getUuid()),
-                            SvrUtil.fakeTimeList.get(player.getUuid()), true);
+                            SvrUtilMain.fakeTimeList.get(player.getUuid()),
+                            SvrUtilMain.fakeTimeList.get(player.getUuid()), true);
                     player.networkHandler.sendPacket(packet);
                 }
             });

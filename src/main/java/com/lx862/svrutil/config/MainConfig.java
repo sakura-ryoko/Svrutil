@@ -1,5 +1,7 @@
 package com.lx862.svrutil.config;
 
+import static com.lx862.svrutil.ModInfo.*;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.ModInfo;
-import com.lx862.svrutil.SvrUtil;
+import com.lx862.svrutil.SvrUtilMain;
 import com.lx862.svrutil.data.JoinMessage;
 
 import net.minecraft.text.Text;
@@ -28,13 +30,13 @@ public class MainConfig {
 
     public static boolean load() {
         if (!Files.exists(CONFIG_PATH)) {
-            SvrUtil.LOGGER.warn("[{}] Config file not found, generating one...", ModInfo.MOD_ID);
+            SvrUtilMain.LOGGER.warn("[{}] Config file not found, generating one...", ModInfo.MOD_ID);
             generate();
             load();
             return true;
         }
 
-        SvrUtil.LOGGER.info("[{}] Reading config...", ModInfo.MOD_ID);
+        SvrUtilMain.LOGGER.info("[{}] Reading config...", ModInfo.MOD_ID);
         joinMessages.clear();
         try {
             final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH)))
@@ -82,7 +84,7 @@ public class MainConfig {
     }
 
     public static void generate() {
-        SvrUtil.LOGGER.info("[{}] Generating config...", ModInfo.MOD_ID);
+        SvrUtilMain.LOGGER.info("[{}] Generating config...", ModInfo.MOD_ID);
         final JsonObject jsonConfig = new JsonObject();
         final JsonArray welcomeConfig = new JsonArray();
         final JsonObject welcomeConfig1 = JoinMessage.toJson(new JoinMessage(
@@ -91,7 +93,7 @@ public class MainConfig {
                 Mappings.literalText(
                         "Please edit \"config/svrutil-lite/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil-Lite.")
                         .formatted(Formatting.GREEN),
-                20, Arrays.asList(1, 2, 3, 4)));
+                20, MOD_ID + ".welcome", Arrays.asList(1, 2, 3, 4)));
         welcomeConfig.add(welcomeConfig1);
         jsonConfig.addProperty("whitelistedMessage", "You are not whitelisted on the server!");
         jsonConfig.addProperty("silentKickMessage", "Internal Exception: java.lang.StackOverflowError");
