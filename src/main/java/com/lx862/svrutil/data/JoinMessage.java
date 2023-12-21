@@ -38,9 +38,10 @@ public class JoinMessage {
 
     public static JoinMessage fromJson(JsonObject jsonObject) {
         List<Integer> permLevels = new ArrayList<>();
-        Text title = jsonObject.has("title") ? Text.Serializer.fromJson(jsonObject.get("title")) : null;
-        Text subtitle = jsonObject.has("subtitle") ? Text.Serializer.fromJson(jsonObject.get("subtitle")) : null;
-        Text joinMessage = jsonObject.has("message") ? Text.Serializer.fromJson(jsonObject.get("message")) : null;
+        Text title = jsonObject.has("title") ? Text.Serialization.fromJsonTree(jsonObject.get("title")) : null;
+        Text subtitle = jsonObject.has("subtitle") ? Text.Serialization.fromJsonTree(jsonObject.get("subtitle")) : null;
+        Text joinMessage = jsonObject.has("message") ? Text.Serialization.fromJsonTree(jsonObject.get("message"))
+                : null;
         int delayTick = jsonObject.has("delayTick") ? jsonObject.get("delayTick").getAsInt() : 0;
 
         try {
@@ -59,9 +60,9 @@ public class JoinMessage {
         for (Integer i : joinMessage.permLevel) {
             permLevels.add(i);
         }
-        jsonObject.add("title", Text.Serializer.toJsonTree(joinMessage.title));
-        jsonObject.add("subtitle", Text.Serializer.toJsonTree(joinMessage.subtitle));
-        jsonObject.add("message", Text.Serializer.toJsonTree(joinMessage.joinMessage));
+        jsonObject.add("title", Text.Serialization.toJsonTree(joinMessage.title));
+        jsonObject.add("subtitle", Text.Serialization.toJsonTree(joinMessage.subtitle));
+        jsonObject.add("message", Text.Serialization.toJsonTree(joinMessage.joinMessage));
         jsonObject.addProperty("delayTick", joinMessage.delayTick);
         jsonObject.add("permLevels", permLevels);
         return jsonObject;

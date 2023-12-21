@@ -50,12 +50,12 @@ public class MainConfig {
             if (jsonConfig.has("whitelistedMessage")) {
                 JsonElement element = jsonConfig.get("whitelistedMessage");
                 try {
-                    whitelistedMessage = Text.Serializer.fromJson(element.getAsString());
+                    whitelistedMessage = Text.Serialization.fromJson(element.getAsString());
                 } catch (Exception ignored) {
                 }
 
                 try {
-                    whitelistedMessage = Text.Serializer.fromJson(element);
+                    whitelistedMessage = Text.Serialization.fromJsonTree(element);
                 } catch (Exception ignored) {
                 }
             }
@@ -63,12 +63,12 @@ public class MainConfig {
             if (jsonConfig.has("silentKickMessage")) {
                 JsonElement element = jsonConfig.get("silentKickMessage");
                 try {
-                    silentKickMessage = Text.Serializer.fromJson(element.getAsString());
+                    silentKickMessage = Text.Serialization.fromJson(element.getAsString());
                 } catch (Exception ignored) {
                 }
 
                 try {
-                    silentKickMessage = Text.Serializer.fromJson(element);
+                    silentKickMessage = Text.Serialization.fromJsonTree(element);
                 } catch (Exception ignored) {
                 }
             }
