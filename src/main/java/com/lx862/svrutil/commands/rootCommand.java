@@ -12,14 +12,12 @@ import com.lx862.svrutil.config.Config;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import me.lucko.fabric.api.permissions.v0.Permissions;
 
-import net.fabricmc.loader.api.FabricLoader;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.util.Formatting;
-
 
 public class rootCommand {
     private static final CommandEntry defaultEntry = new CommandEntry("svrutil", 2, MOD_ID + ".command.svrutil", true);
@@ -38,17 +36,15 @@ public class rootCommand {
     }
 
     private static int executeAbout(CommandContext<ServerCommandSource> context) {
-        String homepageUrl = null;
-        try {
-            // Terrible but it works
-            homepageUrl = FabricLoader.getInstance().getModContainer(ModInfo.MOD_ID).get().getMetadata().getContact()
-                    .get("homepage").get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String version = ModInfo.getVersion();
+        String descripton = ModInfo.getDescription();
+        String authoString = ModInfo.getAuthors();
+        String homepageUrl = ModInfo.getHomepage();
 
         Mappings.sendFeedback(context, Mappings.literalText(ModInfo.MOD_NAME).formatted(Formatting.GOLD), false);
-        Mappings.sendFeedback(context, Mappings.literalText("Version " + ModInfo.getVersion()), false);
+        Mappings.sendFeedback(context, Mappings.literalText("Version " + version), false);
+        Mappings.sendFeedback(context, Mappings.literalText("Description " + descripton), false);
+        Mappings.sendFeedback(context, Mappings.literalText("Authored By " + authoString), false);
         if (homepageUrl != null) {
             final ClickEvent openHomepageEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, homepageUrl);
             Mappings.sendFeedback(context,

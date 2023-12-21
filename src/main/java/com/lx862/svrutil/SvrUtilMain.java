@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import com.lx862.svrutil.config.Config;
 
 import net.fabricmc.api.ModInitializer;
@@ -24,6 +25,9 @@ public class SvrUtilMain implements ModInitializer {
     public void onInitialize() {
         String motd = motds[(int) (System.currentTimeMillis() % motds.length)];
         LOGGER.info("[{}] {}-{}", ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.getVersion());
+        LOGGER.info("[{}] Description: {}", ModInfo.MOD_ID, ModInfo.getDescription());
+        LOGGER.info("[{}] Author: {}", ModInfo.MOD_ID, ModInfo.getAuthors());
+        LOGGER.info("[{}] Homepage: {}", ModInfo.MOD_ID, ModInfo.getHomepage());
         LOGGER.info("[{}] {}", ModInfo.MOD_ID, motd);
 
         Config.loadAll();

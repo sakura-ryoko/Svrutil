@@ -16,7 +16,6 @@ The config file are located in `Your Fabric Instance/config/svrutil-lite/config.
 | subtitle    | The subtitle that are displayed to the player. (Minecraft RAW Text Format)                                                                        |
 | message     | The chat message that are displayed to the player. (Minecraft RAW Text Format)                                                                    |
 | delayTick   | How long to wait (in Minecraft tick) before showing the welcome message to the player.                                                            |
-| permApiNode | Luck Permissions API node to allow for receiving a welcome message. (svrutil-lite.welcome)                                                        |
 | permLevels  | An array of numbers representing the op level of the player.<br>Player that are inside the OP Level range will have the welcome message be shown. |
 
 ## Command Config

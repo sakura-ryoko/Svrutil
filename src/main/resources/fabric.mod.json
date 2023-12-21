@@ -7,9 +7,11 @@
   "description": "Add utilities command for server management, and a couple vanilla tweaks.",
   "authors": [
     "LX86",
-    "Forked by Sakura-Ryoko"
+    "(forked by Sakura-Ryoko)"
   ],
-  "contact": {},
+  "contact": {
+    "homepage": "https://github.com/sakura-ryoko/svrutil-lite"
+  },
 
   "license": "MIT",
   "icon": "assets/svrutil/icon.png",

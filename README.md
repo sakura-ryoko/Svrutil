@@ -1,5 +1,6 @@
 # SvrUtil-Lite (Forked by Sakura-Ryoko)
-Fork strips out a bunch of useless junk features from SvrUtil by LX862.  Adds Luck Permissions Nodes for commands via the "permApiNode" config.
+Fork strips out a bunch of useless junk features from SvrUtil by LX862.
+Adds Luck Permissions Nodes for commands via the "permApiNode" config.
 
 ## Config file
 This mod will work out of the box with all the commands ready to be used.

@@ -1,7 +1,5 @@
 package com.lx862.svrutil.config;
 
-import static com.lx862.svrutil.ModInfo.*;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -93,7 +91,7 @@ public class MainConfig {
                 Mappings.literalText(
                         "Please edit \"config/svrutil-lite/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil-Lite.")
                         .formatted(Formatting.GREEN),
-                20, MOD_ID + ".welcome", Arrays.asList(1, 2, 3, 4)));
+                20, Arrays.asList(1, 2, 3, 4)));
         welcomeConfig.add(welcomeConfig1);
         jsonConfig.addProperty("whitelistedMessage", "You are not whitelisted on the server!");
         jsonConfig.addProperty("silentKickMessage", "Internal Exception: java.lang.StackOverflowError");
