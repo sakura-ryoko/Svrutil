@@ -2,15 +2,10 @@ package com.lx862.svrutil;
 
 import java.util.HashMap;
 import java.util.UUID;
-
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.lx862.svrutil.config.Config;
-
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
 public class SvrUtilMain implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger(ModInfo.MOD_ID);
@@ -30,13 +25,7 @@ public class SvrUtilMain implements ModInitializer {
         LOGGER.info("[{}] Homepage: {}", ModInfo.MOD_ID, ModInfo.getHomepage());
         LOGGER.info("[{}] {}", ModInfo.MOD_ID, motd);
 
-        Config.loadAll();
-
-        Mappings.registerCommand(Commands::register);
-
-        /* Register Fabric API Events */
-        ServerPlayConnectionEvents.JOIN.register(Events::onJoin);
-        ServerTickEvents.START_SERVER_TICK.register(Events::onServerTick);
-        ServerTickEvents.END_SERVER_TICK.register(Events::onTickEnd);
+        ServerLifecycleEvents.SERVER_STARTING.register(Events::onServerStart);
+        ServerLifecycleEvents.SERVER_STARTED.register(Events::onServerStarted);
     }
 }

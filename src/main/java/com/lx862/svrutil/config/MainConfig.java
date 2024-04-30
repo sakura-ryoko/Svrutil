@@ -6,17 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.SvrUtilMain;
 import com.lx862.svrutil.data.JoinMessage;
-
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -43,6 +37,8 @@ public class MainConfig {
             if (jsonConfig.has("joinMessages")) {
                 jsonConfig.getAsJsonArray("joinMessages").forEach(e -> {
                     JsonObject jsonObject = e.getAsJsonObject();
+
+                    SvrUtilMain.LOGGER.info("load(): joinMessages object: {}", jsonObject.toString());
                     joinMessages.add(JoinMessage.fromJson(jsonObject));
                 });
             }
@@ -50,12 +46,12 @@ public class MainConfig {
             if (jsonConfig.has("whitelistedMessage")) {
                 JsonElement element = jsonConfig.get("whitelistedMessage");
                 try {
-                    whitelistedMessage = Text.Serialization.fromJson(element.getAsString());
+                    whitelistedMessage = Text.Serialization.fromJson(element.getAsString(), ModInfo.registryManager);
                 } catch (Exception ignored) {
                 }
 
                 try {
-                    whitelistedMessage = Text.Serialization.fromJsonTree(element);
+                    whitelistedMessage = Text.Serialization.fromJsonTree(element, ModInfo.registryManager);
                 } catch (Exception ignored) {
                 }
             }
@@ -63,12 +59,12 @@ public class MainConfig {
             if (jsonConfig.has("silentKickMessage")) {
                 JsonElement element = jsonConfig.get("silentKickMessage");
                 try {
-                    silentKickMessage = Text.Serialization.fromJson(element.getAsString());
+                    silentKickMessage = Text.Serialization.fromJson(element.getAsString(), ModInfo.registryManager);
                 } catch (Exception ignored) {
                 }
 
                 try {
-                    silentKickMessage = Text.Serialization.fromJsonTree(element);
+                    silentKickMessage = Text.Serialization.fromJsonTree(element, ModInfo.registryManager);
                 } catch (Exception ignored) {
                 }
             }

@@ -1,22 +1,20 @@
 package com.lx862.svrutil.commands;
 
-import static com.lx862.svrutil.ModInfo.*;
-
 import com.lx862.svrutil.Commands;
 import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.SvrUtilMain;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
-
-import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Formatting;
+
+import static com.lx862.svrutil.ModInfo.MOD_ID;
 
 public class r {
         private static final CommandEntry defaultEntry = new CommandEntry("r", 0, MOD_ID + ".command.r", true);
@@ -67,8 +65,7 @@ public class r {
                                                                                         "§6[%s §r-> §6me]: §r%s",
                                                                                         player, message)),
                                                                         false);
-                                                        target.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
-                                                                        SoundCategory.MASTER, 1, 1);
+                                                        target.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
                                                         SvrUtilMain.lastReply.put(target.getGameProfile().getName(),
                                                                         player);
                                                         Commands.finishedExecution(context, defaultEntry);

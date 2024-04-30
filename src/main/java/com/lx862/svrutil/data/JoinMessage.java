@@ -1,17 +1,15 @@
 package com.lx862.svrutil.data;
 
-//import static com.lx862.svrutil.ModInfo.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.Util;
-
-//import me.lucko.fabric.api.permissions.v0.Permissions;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextCodecs;
 
 public class JoinMessage {
     public Text title;
@@ -38,9 +36,9 @@ public class JoinMessage {
 
     public static JoinMessage fromJson(JsonObject jsonObject) {
         List<Integer> permLevels = new ArrayList<>();
-        Text title = jsonObject.has("title") ? Text.Serialization.fromJsonTree(jsonObject.get("title")) : null;
-        Text subtitle = jsonObject.has("subtitle") ? Text.Serialization.fromJsonTree(jsonObject.get("subtitle")) : null;
-        Text joinMessage = jsonObject.has("message") ? Text.Serialization.fromJsonTree(jsonObject.get("message"))
+        Text title = jsonObject.has("title") ? Text.Serialization.fromJsonTree(jsonObject.get("title"), ModInfo.registryManager) : null;
+        Text subtitle = jsonObject.has("subtitle") ? Text.Serialization.fromJsonTree(jsonObject.get("subtitle"), ModInfo.registryManager) : null;
+        Text joinMessage = jsonObject.has("message") ? Text.Serialization.fromJsonTree(jsonObject.get("message"), ModInfo.registryManager)
                 : null;
         int delayTick = jsonObject.has("delayTick") ? jsonObject.get("delayTick").getAsInt() : 0;
 
@@ -60,9 +58,9 @@ public class JoinMessage {
         for (Integer i : joinMessage.permLevel) {
             permLevels.add(i);
         }
-        jsonObject.add("title", Text.Serialization.toJsonTree(joinMessage.title));
-        jsonObject.add("subtitle", Text.Serialization.toJsonTree(joinMessage.subtitle));
-        jsonObject.add("message", Text.Serialization.toJsonTree(joinMessage.joinMessage));
+        jsonObject.add("title", TextCodecs.CODEC.encodeStart(ModInfo.registryManager.getOps(JsonOps.INSTANCE), joinMessage.title).getOrThrow());
+        jsonObject.add("subtitle", TextCodecs.CODEC.encodeStart(ModInfo.registryManager.getOps(JsonOps.INSTANCE), joinMessage.subtitle).getOrThrow());
+        jsonObject.add("message", TextCodecs.CODEC.encodeStart(ModInfo.registryManager.getOps(JsonOps.INSTANCE), joinMessage.joinMessage).getOrThrow());
         jsonObject.addProperty("delayTick", joinMessage.delayTick);
         jsonObject.add("permLevels", permLevels);
         return jsonObject;
