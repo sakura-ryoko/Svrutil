@@ -7,6 +7,8 @@ import java.util.List;
 
 import net.fabricmc.loader.api.FabricLoader;
 
+import com.lx862.svrutil.SvrUtilMain;
+
 public class Config {
     private static final Path configFolder = Paths.get(FabricLoader.getInstance().getConfigDir().toString(),
             "svrutil-lite");
@@ -15,7 +17,7 @@ public class Config {
         try {
             configFolder.toFile().mkdirs();
         } catch (Exception e) {
-            e.printStackTrace();
+            SvrUtilMain.LOGGER.error("getConfigPath(): Config error: [{}]", e.getMessage());
         }
         return configFolder.resolve(filename);
     }

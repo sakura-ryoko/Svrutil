@@ -1,23 +1,19 @@
 package com.lx862.svrutil;
 
-import com.lx862.svrutil.config.Config;
-import com.lx862.svrutil.config.MainConfig;
-import com.lx862.svrutil.data.JoinMessage;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+
+import com.lx862.svrutil.config.MainConfig;
+import com.lx862.svrutil.data.JoinMessage;
 
 public class Events {
     public static void onServerStart(MinecraftServer server)
     {
-        ModInfo.setRegistryManager(server.getRegistryManager());
-        //ModInfo.setFeatures(server.getCommandSource().getEnabledFeatures());
-        Config.loadAll();
-
-        Mappings.registerCommand(Commands::register);
+        ModInfo.setRegistryManager(server.getRegistryManager().toImmutable());
 
         /* Register Fabric API Events */
         ServerPlayConnectionEvents.JOIN.register(Events::onJoin);
@@ -56,9 +52,8 @@ public class Events {
     }
 
     public static void onJoin(ServerPlayNetworkHandler dispatcher, PacketSender sender, MinecraftServer server) {
-        SvrUtilMain.LOGGER.info("onJoin()");
+        SvrUtilMain.debug("onJoin() player [{}] // permLevel [{}]", dispatcher.getPlayer().getNameForScoreboard(), Util.getPermLevel(dispatcher.getPlayer()));
         for (JoinMessage joinMessage : MainConfig.joinMessages) {
-            SvrUtilMain.LOGGER.info("onJoin(): message {}", joinMessage.toString());
             joinMessage.show(dispatcher.getPlayer());
         }
     }

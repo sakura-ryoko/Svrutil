@@ -20,7 +20,7 @@ import net.minecraft.text.ClickEvent;
 import net.minecraft.util.Formatting;
 
 public class rootCommand {
-    private static final CommandEntry defaultEntry = new CommandEntry("svrutil", 2, MOD_ID + ".command.svrutil", true);
+    private static final CommandEntry defaultEntry = new CommandEntry(MOD_ID, 2, MOD_ID + ".command."+MOD_ID, true);
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
 
@@ -45,13 +45,11 @@ public class rootCommand {
         Mappings.sendFeedback(context, Mappings.literalText("Version " + version), false);
         Mappings.sendFeedback(context, Mappings.literalText("Description " + descripton), false);
         Mappings.sendFeedback(context, Mappings.literalText("Authored By " + authoString), false);
-        if (homepageUrl != null) {
-            final ClickEvent openHomepageEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, homepageUrl);
-            Mappings.sendFeedback(context,
-                    Mappings.literalText(homepageUrl).styled(style -> style.withClickEvent(openHomepageEvent))
-                            .formatted(Formatting.UNDERLINE).formatted(Formatting.GREEN),
-                    false);
-        }
+        final ClickEvent openHomepageEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, homepageUrl);
+        Mappings.sendFeedback(context,
+                Mappings.literalText(homepageUrl).styled(style -> style.withClickEvent(openHomepageEvent))
+                        .formatted(Formatting.UNDERLINE).formatted(Formatting.GREEN),
+                false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;
     }

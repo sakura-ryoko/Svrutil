@@ -2,14 +2,16 @@ package com.lx862.svrutil.data;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextCodecs;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.Util;
 import com.mojang.serialization.JsonOps;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextCodecs;
 
 public class JoinMessage {
     public Text title;
@@ -36,16 +38,13 @@ public class JoinMessage {
 
     public static JoinMessage fromJson(JsonObject jsonObject) {
         List<Integer> permLevels = new ArrayList<>();
-        Text title = jsonObject.has("title") ? Text.Serialization.fromJsonTree(jsonObject.get("title"), ModInfo.registryManager) : null;
-        Text subtitle = jsonObject.has("subtitle") ? Text.Serialization.fromJsonTree(jsonObject.get("subtitle"), ModInfo.registryManager) : null;
-        Text joinMessage = jsonObject.has("message") ? Text.Serialization.fromJsonTree(jsonObject.get("message"), ModInfo.registryManager)
-                : null;
+        Text title = jsonObject.has("title") ? TextCodecs.CODEC.decode(ModInfo.registryManager.getOps(JsonOps.INSTANCE), jsonObject.get("title")).resultOrPartial().orElseThrow().getFirst() : null;
+        Text subtitle = jsonObject.has("subtitle") ? TextCodecs.CODEC.decode(ModInfo.registryManager.getOps(JsonOps.INSTANCE), jsonObject.get("subtitle")).resultOrPartial().orElseThrow().getFirst() : null;
+        Text joinMessage = jsonObject.has("message") ? TextCodecs.CODEC.decode(ModInfo.registryManager.getOps(JsonOps.INSTANCE), jsonObject.get("message")).resultOrPartial().orElseThrow().getFirst() : null;
         int delayTick = jsonObject.has("delayTick") ? jsonObject.get("delayTick").getAsInt() : 0;
 
         try {
-            jsonObject.get("permLevels").getAsJsonArray().forEach(e -> {
-                permLevels.add(e.getAsInt());
-            });
+            jsonObject.get("permLevels").getAsJsonArray().forEach(e -> permLevels.add(e.getAsInt()));
         } catch (Exception ignored) {
         }
 

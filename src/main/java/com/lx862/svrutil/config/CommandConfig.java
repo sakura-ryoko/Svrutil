@@ -2,11 +2,15 @@ package com.lx862.svrutil.config;
 
 import static com.lx862.svrutil.ModInfo.*;
 
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 
+import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
 import com.google.gson.GsonBuilder;
@@ -17,6 +21,7 @@ import com.lx862.svrutil.SvrUtilMain;
 import com.lx862.svrutil.data.CommandEntry;
 
 public class CommandConfig {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path CONFIG_PATH = Config.getConfigPath("commands.json");
     public static final HashMap<String, CommandEntry> commandEntries = new HashMap<>();
 
@@ -31,8 +36,10 @@ public class CommandConfig {
         SvrUtilMain.LOGGER.info("[{}] Reading Command config...", ModInfo.MOD_ID);
         commandEntries.clear();
         try {
-            final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH)))
-                    .getAsJsonObject();
+            //final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH)))
+                    //.getAsJsonObject();
+            final JsonObject jsonConfig = JsonParser.parseReader(new InputStreamReader(new FileInputStream(CONFIG_PATH.toFile()), StandardCharsets.UTF_8)).getAsJsonObject();
+
 
             if (jsonConfig.has("overrides")) {
                 JsonObject commandConfig = jsonConfig.getAsJsonObject("overrides");
@@ -44,7 +51,7 @@ public class CommandConfig {
                 });
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            SvrUtilMain.LOGGER.error("load(): Command Config load error: [{}]", e.getMessage());
             generate();
             return false;
         }
@@ -69,10 +76,9 @@ public class CommandConfig {
         jsonConfig.add("_overrides", commandConfigs);
 
         try {
-            Files.write(CONFIG_PATH, Collections.singleton(
-                    new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create().toJson(jsonConfig)));
+            Files.write(CONFIG_PATH, Collections.singleton(GSON.toJson(jsonConfig)));
         } catch (Exception e) {
-            e.printStackTrace();
+            SvrUtilMain.LOGGER.error("generate(): Command Config generate error: [{}]", e.getMessage());
         }
     }
 

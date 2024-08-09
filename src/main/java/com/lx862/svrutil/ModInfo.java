@@ -2,6 +2,7 @@ package com.lx862.svrutil;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.Person;
@@ -11,7 +12,7 @@ import net.minecraft.resource.featuretoggle.FeatureSet;
 public class ModInfo {
     public static final String MOD_NAME = "SvrUtil-Lite";
     public static final String MOD_ID = "svrutil-lite";
-    public static DynamicRegistryManager registryManager = DynamicRegistryManager.EMPTY;
+    public static DynamicRegistryManager.Immutable registryManager = DynamicRegistryManager.EMPTY;
     public static FeatureSet featureSet = FeatureSet.empty();
 
     public static String getVersion() {
@@ -19,7 +20,7 @@ public class ModInfo {
             return FabricLoader.getInstance().getModContainer(MOD_ID).get().getMetadata().getVersion()
                     .getFriendlyString();
         } catch (Exception e) {
-            e.printStackTrace();
+            SvrUtilMain.LOGGER.error("getVersion(): error: [{}]", e.getMessage());
             return "<Unknown>";
         }
     }
@@ -28,7 +29,7 @@ public class ModInfo {
         try {
             return FabricLoader.getInstance().getModContainer(MOD_ID).get().getMetadata().getDescription();
         } catch (Exception e) {
-            e.printStackTrace();
+            SvrUtilMain.LOGGER.error("getDescription(): error: [{}]", e.getMessage());
             return "<Unknown>";
         }
     }
@@ -39,8 +40,9 @@ public class ModInfo {
                     .getMetadata().getAuthors();
             String authoString = "";
             final Iterator<Person> iterator = authoColl.iterator();
-            for (; iterator.hasNext();) {
-                if (authoString == "") {
+            while (iterator.hasNext())
+            {
+                if (Objects.equals(authoString, "")) {
                     authoString = iterator.next().getName();
                 } else {
                     authoString = authoString + ", " + iterator.next().getName();
@@ -49,7 +51,7 @@ public class ModInfo {
 
             return authoString;
         } catch (Exception e) {
-            e.printStackTrace();
+            SvrUtilMain.LOGGER.error("getAuthors(): error: [{}]", e.getMessage());
             return "<Unknown>";
         }
     }
@@ -59,24 +61,18 @@ public class ModInfo {
             return FabricLoader.getInstance().getModContainer(ModInfo.MOD_ID).get().getMetadata().getContact()
                     .get("homepage").get();
         } catch (Exception e) {
-            e.printStackTrace();
+            SvrUtilMain.LOGGER.error("getHomepage(): error: [{}]", e.getMessage());
             return "<Unknown>";
         }
     }
 
-    public static void setRegistryManager(DynamicRegistryManager reg)
+    public static void setRegistryManager(DynamicRegistryManager.Immutable reg)
     {
-        if (!reg.equals(DynamicRegistryManager.EMPTY))
-        {
-            registryManager = reg;
-        }
+        registryManager = reg;
     }
 
     public static void setFeatures(FeatureSet features)
     {
-        if (!features.equals(FeatureSet.empty()))
-        {
-            featureSet = features;
-        }
+        featureSet = features;
     }
 }

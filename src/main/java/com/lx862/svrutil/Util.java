@@ -28,8 +28,8 @@ public class Util {
     }
 
     public static int getPermLevel(PlayerEntity player) {
-        for(int i = 0; i < OP_LEVEL; i++) {
-            if(player.hasPermissionLevel(OP_LEVEL - i)) {
+        for (int i = 0; i < OP_LEVEL; i++) {
+            if (player.hasPermissionLevel(OP_LEVEL - i)) {
                 return OP_LEVEL - i;
             }
         }

@@ -32,7 +32,7 @@ public class TickManager {
             try {
                 runnable.run();
             } catch (Exception e) {
-                e.printStackTrace();
+                SvrUtilMain.LOGGER.error("onTickUpdate(): error: [{}]", e.getMessage());
             }
         }
         for(Map.Entry<Integer, Runnable> entry : scheduleList.entrySet()) {

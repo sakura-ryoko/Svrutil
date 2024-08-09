@@ -2,8 +2,13 @@ package com.lx862.svrutil;
 
 import java.util.HashMap;
 import java.util.UUID;
+
+import net.minecraft.registry.CombinedDynamicRegistries;
+import net.minecraft.registry.ServerDynamicRegistryType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+
+import com.lx862.svrutil.config.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +20,7 @@ public class SvrUtilMain implements ModInitializer {
             "3 Billion Devices runs Java!" };
     public static final HashMap<String, String> lastReply = new HashMap<>();
     public static final HashMap<UUID, Long> fakeTimeList = new HashMap<>();
+    public static final boolean DEBUG = false;
 
     @Override
     public void onInitialize() {
@@ -25,7 +31,22 @@ public class SvrUtilMain implements ModInitializer {
         LOGGER.info("[{}] Homepage: {}", ModInfo.MOD_ID, ModInfo.getHomepage());
         LOGGER.info("[{}] {}", ModInfo.MOD_ID, motd);
 
+        CombinedDynamicRegistries<ServerDynamicRegistryType> combinedDynamicRegistries = ServerDynamicRegistryType.createCombinedDynamicRegistries();
+        ModInfo.setRegistryManager(combinedDynamicRegistries.getCombinedRegistryManager());
+
+        Config.loadAll();
+        Mappings.registerCommand(Commands::register);
+
         ServerLifecycleEvents.SERVER_STARTING.register(Events::onServerStart);
         ServerLifecycleEvents.SERVER_STARTED.register(Events::onServerStarted);
+    }
+
+    public static void debug(String msg, Object... args)
+    {
+        if (DEBUG)
+        {
+            String d = "["+ModInfo.MOD_ID+":DEBUG] " + msg;
+            LOGGER.info(d, args);
+        }
     }
 }

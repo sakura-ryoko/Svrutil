@@ -1,5 +1,8 @@
 package com.lx862.svrutil.config;
 
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class MainConfig {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path CONFIG_PATH = Config.getConfigPath("config.json");
     private static Text silentKickMessage = Mappings.literalText("Internal Exception: java.lang.StackOverflowError");
     public static Text whitelistedMessage = null;
@@ -22,7 +26,7 @@ public class MainConfig {
 
     public static boolean load() {
         if (!Files.exists(CONFIG_PATH)) {
-            SvrUtilMain.LOGGER.warn("[{}] Config file not found, generating one...", ModInfo.MOD_ID);
+            SvrUtilMain.LOGGER.warn("[{}] Main Config not found, generating one...", ModInfo.MOD_ID);
             generate();
             load();
             return true;
@@ -31,14 +35,13 @@ public class MainConfig {
         SvrUtilMain.LOGGER.info("[{}] Reading config...", ModInfo.MOD_ID);
         joinMessages.clear();
         try {
-            final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH)))
-                    .getAsJsonObject();
+            //final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH)))
+                    //.getAsJsonObject();
+            final JsonObject jsonConfig = JsonParser.parseReader(new InputStreamReader(new FileInputStream(CONFIG_PATH.toFile()), StandardCharsets.UTF_8)).getAsJsonObject();
 
             if (jsonConfig.has("joinMessages")) {
                 jsonConfig.getAsJsonArray("joinMessages").forEach(e -> {
                     JsonObject jsonObject = e.getAsJsonObject();
-
-                    SvrUtilMain.LOGGER.info("load(): joinMessages object: {}", jsonObject.toString());
                     joinMessages.add(JoinMessage.fromJson(jsonObject));
                 });
             }
@@ -46,12 +49,7 @@ public class MainConfig {
             if (jsonConfig.has("whitelistedMessage")) {
                 JsonElement element = jsonConfig.get("whitelistedMessage");
                 try {
-                    whitelistedMessage = Text.Serialization.fromJson(element.getAsString(), ModInfo.registryManager);
-                } catch (Exception ignored) {
-                }
-
-                try {
-                    whitelistedMessage = Text.Serialization.fromJsonTree(element, ModInfo.registryManager);
+                    whitelistedMessage = Text.of(element.getAsString());
                 } catch (Exception ignored) {
                 }
             }
@@ -59,17 +57,12 @@ public class MainConfig {
             if (jsonConfig.has("silentKickMessage")) {
                 JsonElement element = jsonConfig.get("silentKickMessage");
                 try {
-                    silentKickMessage = Text.Serialization.fromJson(element.getAsString(), ModInfo.registryManager);
-                } catch (Exception ignored) {
-                }
-
-                try {
-                    silentKickMessage = Text.Serialization.fromJsonTree(element, ModInfo.registryManager);
+                    silentKickMessage = Text.of(element.getAsString());
                 } catch (Exception ignored) {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            SvrUtilMain.LOGGER.error("load(): Main Config load error: [{}]", e.getMessage());
             generate();
             return false;
         }
@@ -87,7 +80,7 @@ public class MainConfig {
                 Mappings.literalText(
                         "Please edit \"config/svrutil-lite/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil-Lite.")
                         .formatted(Formatting.GREEN),
-                20, Arrays.asList(1, 2, 3, 4)));
+                20, Arrays.asList(0, 1, 2, 3, 4)));
         welcomeConfig.add(welcomeConfig1);
         jsonConfig.addProperty("whitelistedMessage", "You are not whitelisted on the server!");
         jsonConfig.addProperty("silentKickMessage", "Internal Exception: java.lang.StackOverflowError");
@@ -95,9 +88,9 @@ public class MainConfig {
 
         try {
             Files.write(CONFIG_PATH,
-                    Collections.singleton(new GsonBuilder().setPrettyPrinting().create().toJson(jsonConfig)));
+                    Collections.singleton(GSON.toJson(jsonConfig)));
         } catch (Exception e) {
-            e.printStackTrace();
+            SvrUtilMain.LOGGER.error("generate(): Main Config generate error: [{}]", e.getMessage());
         }
     }
 
